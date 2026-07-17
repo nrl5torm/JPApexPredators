@@ -11,7 +11,7 @@ import SwiftUI
 struct JPApexPredatorsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            PredatorsListView()
         }
     }
 }
