@@ -5,8 +5,8 @@
 //  Created by Olivier Sbg on 06/07/2026.
 //
 
-import Foundation
 import SwiftUI
+import MapKit
 
 struct Predator: Decodable, Identifiable {
     let id: Int
@@ -25,7 +25,11 @@ struct Predator: Decodable, Identifiable {
         name.lowercased().replacingOccurrences(of: " ", with: "")
     }
     
-    struct MovieScene: Decodable {
+    var location: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    struct MovieScene: Decodable, Identifiable {
         let id: Int
         let movie: String
         let sceneDescription: String

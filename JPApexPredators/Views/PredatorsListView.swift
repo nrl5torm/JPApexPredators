@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct PredatorsListView: View {
     
@@ -27,7 +28,11 @@ struct PredatorsListView: View {
 
             List(filteredPredators) { predator in
                 NavigationLink {
-                    PredatorDetailView()
+                    PredatorDetailView(predator: predator,
+                                       position: .camera(MapCamera(
+                                        centerCoordinate: predator.location,
+                                        distance: 30000))
+                    )
                 } label: {
                     
                     HStack {
@@ -66,7 +71,7 @@ struct PredatorsListView: View {
                         Image(systemName: "textformat")
 //                            .symbolEffect(.bounce, value: isAlphabeticalOrder)
                     }
-                    .foregroundStyle(isAlphabeticalOrder ? .white : .primary)
+                    .foregroundStyle(isAlphabeticalOrder ? .white : .accentColor)
                     .fontWeight(isAlphabeticalOrder ? .bold: .regular)
                     .background(isAlphabeticalOrder ? .blue : .clear)
                     .clipShape(.capsule)
@@ -85,11 +90,12 @@ struct PredatorsListView: View {
                 }
             }
         }
-        //        .preferredColorScheme(.dark)
 
     }
 }
 
 #Preview {
     PredatorsListView()
+        .preferredColorScheme(.dark)
+
 }
