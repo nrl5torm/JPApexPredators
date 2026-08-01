@@ -10,7 +10,9 @@ import MapKit
 
 struct PredatorDetailView: View {
     let predator: Predator
+    
     @State var position: MapCameraPosition
+    @Namespace var namespace
     
     var body: some View {
         GeometryReader { gr in
@@ -47,7 +49,13 @@ struct PredatorDetailView: View {
                     
                     // Location
                     NavigationLink {
-                        Image(predator.image)
+                        PredatorMapView(position: .camera(MapCamera(
+                            centerCoordinate: predator.location,
+                            distance: 1000,
+                            heading: 250,
+                            pitch: 80))
+                        )
+                        .navigationTransition(.zoom(sourceID: 1, in: namespace))
                     } label: {
                         Map(position: $position) {
                             Annotation(predator.name, coordinate: predator.location) {
@@ -66,7 +74,7 @@ struct PredatorDetailView: View {
                                 .padding(.trailing, 5)
                         }
                         .overlay(alignment: .topLeading) {
-                            Text("Current location:")
+                            Text("Current Location")
                                 .foregroundStyle(.white)
                                 .padding([.leading, .trailing], 8)
                                 .padding(.top, 3)
@@ -76,10 +84,12 @@ struct PredatorDetailView: View {
                         }
                         .clipShape(.rect(cornerRadius: 15))
                     }
+                    .matchedTransitionSource(id: 1, in: namespace)
                                         
                     // Movies
                     Text("Appears in:")
                         .font(.title3)
+                        .padding(.top)
                     
                     ForEach(predator.movies, id: \.self) { movie in
                         Text("• \(movie)")
@@ -89,7 +99,7 @@ struct PredatorDetailView: View {
                     // Scenes
                     Text("Movie Moments")
                         .font(.title)
-                        .padding(.top, 15)
+                        .padding(.top, 20)
                     
                     ForEach(predator.movieScenes) { scene in
                         Text(scene.movie)
@@ -103,11 +113,12 @@ struct PredatorDetailView: View {
                     // Link
                     Text("Read More:")
                         .font(.caption)
+                        .fontWeight(.bold)
                     
                     Link(predator.link, destination: URL(string: predator.link)!)
                         .font(.caption)
                         .foregroundStyle(.blue)
-                        .padding(.bottom)
+                        .padding(.bottom, 100)
                     
                 }
                 .padding()

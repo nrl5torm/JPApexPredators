@@ -8,17 +8,18 @@
 import Foundation
 
 class PredatorsCollection {
-    static var loaded: [Predator] = []
+    private static var _loaded: [Predator] = []
+    
     var selected: [Predator] = []
     
     init () {
         loadPredatorsOnce()
         
-        selected = PredatorsCollection.loaded
+        selected = PredatorsCollection._loaded
     }
     
-    func loadPredatorsOnce() {
-        if PredatorsCollection.loaded.count > 0 {
+    private func loadPredatorsOnce() {
+        if PredatorsCollection._loaded.count > 0 {
             return
         }
         
@@ -28,7 +29,7 @@ class PredatorsCollection {
                 
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                PredatorsCollection.loaded = try decoder.decode([Predator].self, from: data)
+                PredatorsCollection._loaded = try decoder.decode([Predator].self, from: data)
                 
             } catch {
                 print("Error decoding JSON data: \(error)")
