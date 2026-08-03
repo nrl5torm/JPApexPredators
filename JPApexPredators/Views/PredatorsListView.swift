@@ -59,7 +59,7 @@ struct PredatorsListView: View {
             }
             .navigationTitle("Apex Predators")
             .searchable(text: $searchName)
-//            .autocorrectionDisabled()
+            .autocorrectionDisabled()
             .animation(.default, value: searchName)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {

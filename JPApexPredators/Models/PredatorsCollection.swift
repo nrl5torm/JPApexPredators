@@ -39,8 +39,8 @@ class PredatorsCollection {
     
     func filter(byName nameFilter: String) -> PredatorsCollection {
         if !nameFilter.isEmpty {
-            selected = selected.filter { ap in
-                ap.name.localizedCaseInsensitiveContains(nameFilter)
+            selected = selected.filter {
+                $0.name.localizedCaseInsensitiveContains(nameFilter)
             }
         }
         return self
